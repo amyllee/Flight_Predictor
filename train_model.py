@@ -12,6 +12,7 @@ X = df[['nsmiles',
         'passengers',
         'quarter',
         'large_ms',
+        'lf_ms',
         'fare_low',
         'fare_lg' ]]
 y = df['fare']
