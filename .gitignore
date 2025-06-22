@@ -17,3 +17,6 @@ dist/
 
 # Ignore VS Code settings
 .vscode/
+
+# Ignore pickle file
+model.pkl
