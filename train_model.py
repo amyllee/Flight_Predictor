@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 # Load data
 df = pd.read_csv("domestic.csv")
+df.info()
 
 # Select Features and Target
 X = df[['nsmiles',

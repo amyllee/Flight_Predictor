@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import matplotlib as plt
+import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, r2_score
 
 # ---------- Load Model ----------
@@ -33,10 +33,29 @@ st.subheader("Select Cities")
 origin = st.selectbox("Origin City", city1_list)
 destination = st.selectbox("Destination City", city2_list)
 
+@st.cache_data
+def lookup_distance():
+    df = pd.read_csv('domestic.csv')
+    df = df[['city1', 'city2', 'nsmiles']].dropna().drop_duplicates()
+    return df
+
+distance_df = lookup_distance()
+
+matched_row = distance_df[
+    ((distance_df['city1'] == origin) & (distance_df['city2'] == destination)) |
+    ((distance_df['city1'] == destination) & (distance_df['city2'] == origin))
+]
+
+if not matched_row.empty:
+    nsmiles = matched_row.iloc[0]['nsmiles']
+    st.write(f"Distance between {origin} and {destination}: {nsmiles} miles")
+else:
+    st.warning("Distance not found for this route. Please enter manually.")
+    nsmiles = st.number_input("Distance between airports (miles)", min_value=0)
+
 # ---------- User Input ----------
 st.subheader("Enter Route Features")
 
-nsmiles = st.number_input("Distance between airports (miles)", min_value=0, value=500)
 passengers = st.number_input("Number of passengers", min_value=0, value=200)
 quarter = st.selectbox("Quarter", [1, 2, 3, 4])
 large_ms = st.slider("Market Share of Largest Carrier", 0.0, 1.0, 0.5)
@@ -66,6 +85,7 @@ if st.checkbox("Show Predicted vs. Actual 📈"):
     def load_sample_data():
         df = pd.read_csv("domestic.csv")
         df = df.dropna(subset=['nsmiles', 'passengers', 'quarter', 'large_ms', 'lf_ms', 'fare_low', 'fare_lg'])
+        X = df[['nsmiles', 'passengers', 'quarter', 'large_ms', 'lf_ms', 'fare_low', 'fare_lg']]
         y = df['fare']
         return X, y
     
