@@ -2,14 +2,22 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+import gdown
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, r2_score
 
 # ---------- Load Model ----------
 @st.cache_resource
 def load_model():
-    with open("model.pkl", "rb") as f:
+    file_id = "1yK9Xn30O_EotvDpHDgBSnO-cSaI4Hdyq"
+    download_url = f"https://drive.google.com/uc?id={file_id}"
+    output = "model.pkl"
+
+    gdown.download(download_url, output, quiet=False)
+
+    with open(output, "rb") as f:
         model = pickle.load(f)
+    
     return model
 
 model = load_model()
