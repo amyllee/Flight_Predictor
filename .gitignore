@@ -20,6 +20,8 @@ dist/
 
 # Ignore pickle file
 model.pkl
+*.part
+*.pkl
 
 # Ignore dataset
 *.csv
