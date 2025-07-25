@@ -44,11 +44,11 @@ This project predicts U.S. domestic flight fares based on route features like di
 - Target Variable: `fare` (average ticket price)
 
 ## How to Run
+#### Live App
+Try the interactive flight fare predictor app here:
+👉 [Streamlit App](https://flightpricepredictor2025.streamlit.app/)
+
 #### Notebook
 1. Open `Flight_predictor.ipynb`
 2. Ensure `domestic.csv` lives in same directory
 3. Run all cells to see analysis and model examples
-
-#### Streamlit App
-1. Run "streamlit run Flight_predictor.py" in terminal
-2. Follow app UI and toggle features and optional visual insights
